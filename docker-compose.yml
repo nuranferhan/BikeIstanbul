@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: bikeistanbul-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://bike:bike123@db:5432/bikeistanbul
+      - MQTT_BROKER_HOST=mqtt
+      - MQTT_BROKER_PORT=1883
+    depends_on:
+      db:
+        condition: service_healthy
+      mqtt:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: bikeistanbul-db
+    environment:
+      POSTGRES_USER: bike
+      POSTGRES_PASSWORD: bike123
+      POSTGRES_DB: bikeistanbul
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bike -d bikeistanbul"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: bikeistanbul-mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mqttdata:/mosquitto/data
+
+# web:
+  #   build: ./web
+  #   container_name: bikeistanbul-web
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8000
+  #     - REACT_APP_MAPS_KEY=${GOOGLE_MAPS_API_KEY}
+  #   depends_on:
+  #     - backend
+
+volumes:
+  pgdata:
+  mqttdata:

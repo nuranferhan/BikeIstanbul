@@ -1,0 +1,22 @@
+"""Kullanıcı servis katmanı."""
+from __future__ import annotations
+
+from uuid import UUID
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.models import User
+
+
+class UserService:
+    def __init__(self, db: AsyncSession):
+        self.db = db
+
+    async def get_by_id(self, user_id: str | UUID) -> User | None:
+        result = await self.db.execute(select(User).where(User.id == UUID(str(user_id))))
+        return result.scalar_one_or_none()
+
+    async def get_by_email(self, email: str) -> User | None:
+        result = await self.db.execute(select(User).where(User.email == email))
+        return result.scalar_one_or_none()
