@@ -22,6 +22,9 @@
 
 </div>
 
+<div align="center">
+  <img width="100%" alt="Image" src="https://github.com/user-attachments/assets/84b8bb35-4506-4fa1-80b5-8363dbd82fbb" />
+</div>
 
 ##  Özellikler
 
