@@ -35,9 +35,8 @@
 
 ### QR Kod ile Kiralama
 - Anlık QR kod okutma → MQTT üzerinden kilit açma komutu
-- HMAC-SHA256 imzalı güvenli IoT mesajlaşma
-- TLS 1.3 şifreli broker iletişimi
-
+- Güvenilir IoT mesaj iletimi için QoS 1 ve QoS 2 teslimat garantileri
+  
 ### Toplu Taşıma Entegrasyonu
 - İETT, Marmaray, Metrobüs ve Vapur sefer saatleri (İBB Açık Veri)
 - Varış noktasına göre otomatik aktarma önerisi (FR-3)
@@ -48,7 +47,7 @@
 - Puan ve rozet gamification sistemi
 
 ### Deprem Acil Durum Modu
-- AFAD entegrasyonu ile otomatik tetikleme
+- Harici acil durum uyarıları ve webhook'lar (örn. AFAD simülasyonları) için hazır tetikleyici altyapısı
 - **Observer Deseni**: Tüm kilitler açılır, kiralamalar ücretsiz iptal edilir
 - İstasyon broadcast bildirimleri (QoS 2)
 
@@ -82,7 +81,7 @@ BikeIstanbul, **Katmanlı Mimari** (Layered Architecture) üzerine inşa edilmi�
 │  ┌──────────────────────┐  ┌───────────────────────────────┐   │
 │  │  PostgreSQL 15       │  │  Eclipse Mosquitto            │   │
 │  │  + PostGIS 3.4       │  │  MQTT Broker (IoT)            │   │
-│  │  Coğrafi Sorgular    │  │  TLS 1.3 · QoS 1-2            │   │
+│  │  Coğrafi Sorgular    │  │  QoS 1-2 Güvenceli İletişim   │   │
 │  └──────────────────────┘  └───────────────────────────────┘   │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -279,8 +278,7 @@ stations/{stationId}/alert ← Deprem ve bakım yayınları
   "command": "UNLOCK",
   "tripId": "TRP-987654",
   "userId": "USR-12345",
-  "timestamp": "2026-03-29T15:30:00+03:00",
-  "signature": "HMAC-SHA256-hash"
+  "timestamp": "2026-03-29T15:30:00+03:00"
 }
 ```
 
@@ -296,7 +294,7 @@ stations/{stationId}/alert ← Deprem ve bakım yayınları
 
 ---
 
-## Test
+## Kalite Güvence (QA) ve Testler
 
 ### Birim Testleri (pytest)
 
