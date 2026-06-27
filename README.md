@@ -63,27 +63,27 @@
 BikeIstanbul, **Katmanlı Mimari** (Layered Architecture) üzerine inşa edilmiştir.
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                     SUNUM KATMANI                              │
-│  ┌─────────────────────────┐  ┌────────────────────────────┐   │
-│  │  Flutter Mobil (iOS/Android) │  │  React Web Yönetim Paneli │  
-│  │  MVVM + Provider/Riverpod │  │  TypeScript + Harita/Grafik  │
-│  └─────────────────────────┘  └────────────────────────────┘   │
-├────────────────────────────────────────────────────────────────┤
-│                   İŞ MANTIĞI KATMANI                           │
-│  ┌──────────────┐ ┌──────────────┐ ┌────────────┐ ┌──────────┐ │
-│  │  TripService │ │PaymentService│ │RouteService│ │Emergency │ │
-│  │  (Kiralama)  │ │  (Iyzico)    │ │ (PostGIS)  │ │ Service  │ │
-│  └──────────────┘ └──────────────┘ └────────────┘ └──────────┘ │
-│         FastAPI · Python 3.11 · SQLAlchemy · JWT               │
-├────────────────────────────────────────────────────────────────┤
-│                      VERİ KATMANI                              │
-│  ┌──────────────────────┐  ┌───────────────────────────────┐   │
-│  │  PostgreSQL 15       │  │  Eclipse Mosquitto            │   │
-│  │  + PostGIS 3.4       │  │  MQTT Broker (IoT)            │   │
-│  │  Coğrafi Sorgular    │  │  QoS 1-2 Güvenceli İletişim   │   │
-│  └──────────────────────┘  └───────────────────────────────┘   │
-└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────┐
+│                          SUNUM KATMANI                             │
+│  ┌─────────────────────────────┐  ┌─────────────────────────────┐  │
+│  │  Flutter Mobil (iOS/Android)│  │  React Web Yönetim Paneli   │  │
+│  │  MVVM + Provider/Riverpod   │  │  TypeScript + Harita/Grafik │  │
+│  └─────────────────────────────┘  └─────────────────────────────┘  │
+├────────────────────────────────────────────────────────────────────┤
+│                        İŞ MANTIĞI KATMANI                          │
+│   ┌──────────────┐ ┌──────────────┐ ┌────────────┐ ┌──────────┐    │
+│   │  TripService │ │PaymentService│ │RouteService│ │Emergency │    │
+│   │  (Kiralama)  │ │  (Iyzico)    │ │ (PostGIS)  │ │ Service  │    │
+│   └──────────────┘ └──────────────┘ └────────────┘ └──────────┘    │
+│            FastAPI · Python 3.11 · SQLAlchemy · JWT                │
+├────────────────────────────────────────────────────────────────────┤
+│                           VERİ KATMANI                             │
+│    ┌──────────────────────┐  ┌───────────────────────────────┐     │
+│    │  PostgreSQL 15       │  │  Eclipse Mosquitto            │     │
+│    │  + PostGIS 3.4       │  │  MQTT Broker (IoT)            │     │
+│    │  Coğrafi Sorgular    │  │  QoS 1-2 Güvenceli İletişim   │     │
+│    └──────────────────────┘  └───────────────────────────────┘     │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Kullanılan Tasarım Desenleri
