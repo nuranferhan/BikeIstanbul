@@ -28,7 +28,7 @@
 ##  Özellikler
 
 ### Gerçek Zamanlı Harita
-- 500m yarıçapta müsait bisikletleri **1 saniye** içinde listeleme (FR-1)
+- 500m yarıçapta müsait bisikletleri listeleme
 - PostGIS `ST_DWithin` ile hızlı coğrafi sorgulama
 - Batarya durumuna göre renk kodlu harita işaretçileri
 
@@ -46,15 +46,13 @@
 - Puan ve rozet gamification sistemi
 
 ### Deprem Acil Durum Modu
-- Harici acil durum uyarıları ve webhook'lar (örn. AFAD simülasyonları) için hazır tetikleyici altyapısı
+- Harici acil durum uyarıları için hazır tetikleyici altyapısı
 - **Observer Deseni**: Tüm kilitler açılır, kiralamalar ücretsiz iptal edilir
 - İstasyon broadcast bildirimleri (QoS 2)
 
 ### Ödeme
-- İstanbulkart entegrasyonu
-- Iyzico API ile güvenli online ödeme
-- PCI-DSS uyumlu kart bilgisi saklama
-
+- Iyzico referanslı API ile güvenli online ödeme kaydı simüle sistemi
+  
 ---
 
 ## Sistem Mimarisi
@@ -66,7 +64,7 @@ BikeIstanbul, **Katmanlı Mimari** (Layered Architecture) üzerine inşa edilmi�
 │                          SUNUM KATMANI                             │
 │  ┌─────────────────────────────┐  ┌─────────────────────────────┐  │
 │  │  Flutter Mobil (iOS/Android)│  │  React Web Yönetim Paneli   │  │
-│  │  MVVM + Provider/Riverpod   │  │  TypeScript + Harita/Grafik │  │
+│  │       MVVM + Provider       │  │  TypeScript + Harita/Grafik │  │
 │  └─────────────────────────────┘  └─────────────────────────────┘  │
 ├────────────────────────────────────────────────────────────────────┤
 │                        İŞ MANTIĞI KATMANI                          │
@@ -149,9 +147,7 @@ bikeistanbul/
 │   │   └── utils/
 │   └── pubspec.yaml
 │
-├── docs/                           # Dokümanlar ve diyagramlar
 ├── docker-compose.yml                 # Tüm servisleri ayağa kaldırır
-├── .env.example                       # Ortam değişkeni şablonu
 └── README.md
 ```
 
@@ -167,25 +163,7 @@ bikeistanbul/
 
 ### 1. Depoyu Klonlayın
 
-```bash
-git clone https://github.com/bikeistanbul/platform.git
-cd platform
-```
-
 ### 2. Ortam Değişkenlerini Yapılandırın
-
-```bash
-cp .env.example .env
-```
-
-`.env` dosyasını açıp aşağıdaki değerleri girin:
-
-```env
-SECRET_KEY=guclu-bir-anahtar-girin
-GOOGLE_MAPS_API_KEY=...
-IYZICO_API_KEY=...
-IYZICO_SECRET_KEY=...
-```
 
 ### 3. Tüm Servisleri Başlatın
 
@@ -317,14 +295,13 @@ tests/test_trip_service.py::test_emergency_handler_marks_bikes_available PASSED
 pylint app/ --disable=C0114,C0115 --max-line-length=100
 ```
 
-> Hedef skor: **9.0 / 10** ↑
+> Pylint bağımlılığı skor hedefi: **9.0 / 10** ↑
 
 ### Flutter Testleri
 
 ```bash
 cd flutter_app
 flutter test
-flutter test integration_test/  # Uçtan uca testler
 ```
 
 ---
